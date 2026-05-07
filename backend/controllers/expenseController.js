@@ -44,3 +44,39 @@ export const getExpenses = async (req, res) => {
 
     }
 };
+
+export const updateExpense = async (req, res) => {
+    try {
+        const updatedExpense = await Expense.findOneAndUpdate(
+            {
+                _id: req.params.id,
+                user: req.userId
+            },
+            req.body,
+            { new: true }
+        );
+        if (!updatedExpense) {
+            return res.status(404).json({ message: "Expense Not Found" });
+        }
+        res.status(200).json({ message: "Expense Updated Successfully!", data: updatedExpense });
+    } catch (err) {
+        res.status(500).json({ message: "Server Error", error: err.message });
+    }
+}
+
+export const deleteExpense = async (req, res) => {
+    try {
+        const deletedExpense = await Expense.findOneAndDelete(
+            {
+                _id: req.params.id,
+                user: req.userId
+            }
+        );
+        if (!deletedExpense) {
+            return res.status(404).json({ message: "Expense Not Found!" });
+        }
+        res.status(200).json({ message: "Expense Deleted Successfully!" });
+    } catch (err) {
+        res.status(500).json({ message: "Server Error", error: err.message });
+    }
+}
