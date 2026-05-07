@@ -5,7 +5,7 @@ export const authMiddleware = (req, res, next) => {
 
     if (!token) return res.status(401).send("No Token");
 
-    const decoded = jwt.verify(token, "secretkey");
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     req.userId = decoded.id;
     

@@ -1,4 +1,4 @@
-
+// 
 import User from "../models/User.js";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
@@ -28,7 +28,7 @@ export const login = async (req, res) => {
 
     if (!isMatch) return res.status(400).send("Wrong Password!");
     
-    const token = jwt.sign({ id: user._id }, "secretkey");
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
     res.json({ token });
 }
