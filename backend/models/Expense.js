@@ -1,20 +1,34 @@
+// backend/models/Expense.js
 
 import mongoose from "mongoose";
 
 const expenseSchema = new mongoose.Schema({
-    title: String,
-    amount: Number,
-    category: String,
+
+    title: {
+        type: String,
+        required: true
+    },
+
+    amount: {
+        type: Number,
+        required: true
+    },
+
+    category: {
+        type: String,
+        required: true
+    },
+
     date: {
         type: Date,
-        default: Date.now()
+        default: Date.now
     },
-    user:{
+
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }
+
 });
 
-const Expense = mongoose.model("Expense", expenseSchema);
-
-export default Expense;
+export default mongoose.model("Expense", expenseSchema);
