@@ -55,7 +55,7 @@ export const updateExpense = async (req, res) => {
             req.body,
             { new: true }
         );
-        if (!updatedExpense) {
+        if (!updatedExpense) { 
             return res.status(404).json({ message: "Expense Not Found" });
         }
         res.status(200).json({ message: "Expense Updated Successfully!", data: updatedExpense });
