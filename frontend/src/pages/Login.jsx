@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { IoEyeSharp } from "react-icons/io5";
 import { PiEyeSlashFill } from "react-icons/pi";
+import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
@@ -28,7 +29,8 @@ function Login() {
       try {
         console.log("Login successfull!", values);
         resetForm();
-        toast.success("Login Successfull!")
+        toast.success("Login Successfull!");
+        navigate('/dashboard')
       } catch (err) {
         console.log("Error:-", err.message);
         toast.error("Error:-", err.message);
@@ -37,10 +39,10 @@ function Login() {
   })
   return (
     <>
-      <div className='min-h-screen bg-[#D9EAFD] flex justify-center items-center'>
-        <div className='bg-[#F2F9FF] w-full max-w-md p-8 rounded shadow-xl'>
+      <div className='min-h-screen bg-[#D9EAFD] flex justify-center items-center px-3'>
+        <div className='bg-[#F2F9FF] w-full max-w-md p-6 sm:p-8 rounded shadow-xl'>
           <form onSubmit={formik.handleSubmit}>
-            <h1 className='font-bold text-2xl text-[#154D71] text-center'>Login</h1>
+            <h1 className='font-bold text-2xl sm:text-3xl text-[#154D71] text-center'>Login</h1>
             <div className='mt-5'>
               <label className='text-[#154D71] font-semibold'>Email</label>
               <input
@@ -69,23 +71,31 @@ function Login() {
               />
               <div
                 onClick={() => { setShowPassword(!showPassword) }}
-                className='absolute top-1/2 right-3  cursor-pointer text-[#154D71]'>
+                className='absolute top-9 right-3  cursor-pointer text-[#154D71]'>
                 {showPassword ? <IoEyeSharp size={23} /> : <PiEyeSlashFill size={23} />}
               </div>
-            {formik.touched.password && formik.errors.password && (
-              <p className='text-red-500'>{formik.errors.password}</p>
-            )}
-        </div>
-        <button
-          type='submit'
-          className='w-full h-10 mt-6 bg-[#154D71] text-white font-semibold rounded outline-none cursor-pointer hover:bg-[#213555]'>Login
-        </button>
-        <p className='font-semibold text-gray-700 mt-3 text-center'>Don't have an account?
-          <span
-            onClick={() => navigate('/signup')}
-            className='text-[#154D71] cursor-pointer'> Sign Up</span></p>
-      </form>
-    </div >
+              {formik.touched.password && formik.errors.password && (
+                <p className='text-red-500'>{formik.errors.password}</p>
+              )}
+            </div>
+            <button
+              type='submit'
+              onClick={(e) => e.stopPropagation()}
+              className='w-full h-10 mt-6 bg-[#154D71] text-white font-semibold rounded outline-none cursor-pointer hover:bg-[#213555]'>Login
+            </button>
+
+            <div className='flex justify-center gap-2 bg-white mt-5 h-10 rounded shadow-md p-2 items-center outline-none'>
+              <FcGoogle size={25} />
+              <button
+                type='button'
+                className='font-semibold text-gray-800 cursor-pointer outline-none'>Continue With Google</button>
+            </div>
+            <p className='font-semibold text-gray-700 mt-3 text-center sm:text-base'>Don't have an account?
+              <span
+                onClick={() => navigate('/signup')}
+                className='text-[#154D71] cursor-pointer'> Sign Up</span></p>
+          </form>
+        </div >
       </div >
     </>
   )

@@ -1,3 +1,4 @@
+// chal chale kahi udk
 // frontend/src/pages/signup.jsx
 
 import React, { useState } from 'react'
@@ -41,11 +42,11 @@ function SignUp() {
   })
   return (
     <>
-      <div className='min-h-screen bg-[#D9EAFD] flex justify-center items-center'>
+      <div className='min-h-screen bg-[#D9EAFD] flex justify-center items-center px-3'>
         <div className='bg-[#F2F9FF] w-full max-w-md p-8 rounded shadow-xl'>
           <form onSubmit={formik.handleSubmit}>
 
-            <h1 className='font-bold text-2xl text-[#154D71] text-center'>Create Account</h1>
+            <h1 className='font-bold text-2xl sm:text-3xl text-[#154D71] text-center'>Create Account</h1>
 
             <div className='mt-5'>
               <label className='text-[#154D71] font-semibold'>Name</label>
@@ -92,7 +93,7 @@ function SignUp() {
               />
               <div
                 onClick={() => { setShowPassword(!showPassword) }}
-                className='absolute top-1/2 right-3  cursor-pointer text-[#154D71]'>
+                className='absolute top-9 right-3  cursor-pointer text-[#154D71]'>
                 {showPassword ? <IoEyeSharp size={23} /> : <PiEyeSlashFill size={23} />}
               </div>
               {formik.touched.password && formik.errors.password && (
