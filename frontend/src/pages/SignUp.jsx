@@ -1,4 +1,3 @@
-// chal chale kahi udk
 // frontend/src/pages/signup.jsx
 
 import React, { useState } from 'react'
@@ -102,7 +101,7 @@ function SignUp() {
             </div>
             <button
               type='submit'
-              className='w-full h-10 mt-6 bg-[#154D71] text-white font-semibold rounded outline-none cursor-pointer hover:bg-[#213555]'>Sign Up
+              className='w-full h-10 mt-6 bg-[#154D71] text-white font-semibold rounded outline-none cursor-pointer  hover:bg-[#123a56]'>Sign Up
             </button>
             <p className='font-semibold text-gray-700 mt-3 text-center'>Already have an account?
               <span

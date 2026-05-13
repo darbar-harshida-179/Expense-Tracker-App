@@ -81,7 +81,7 @@ function Login() {
             <button
               type='submit'
               onClick={(e) => e.stopPropagation()}
-              className='w-full h-10 mt-6 bg-[#154D71] text-white font-semibold rounded outline-none cursor-pointer hover:bg-[#213555]'>Login
+              className='w-full h-10 mt-6 bg-[#154D71] text-white font-semibold rounded outline-none cursor-pointer hover:bg-[#123a56]'>Login
             </button>
 
             <div className='flex justify-center gap-2 bg-white mt-5 h-10 rounded shadow-md p-2 items-center outline-none'>
