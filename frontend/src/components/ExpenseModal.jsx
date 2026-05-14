@@ -30,8 +30,8 @@ function ExpenseModal({ setOpenModal }) {
 
     return (
         <>
-            <div className='fixed inset-0 backdrop-blur-sm flex justify-center items-center px-3 '>
-                <form onSubmit={formik.handleSubmit} className='bg-white shadow-md rounded w-full max-w-md'>
+            <div className='fixed inset-0 backdrop-blur-sm flex justify-center items-center px-3 z-50'>
+                <form onSubmit={formik.handleSubmit} className='bg-white shadow-lg rounded-lg w-full max-w-md'>
                     <div className='p-5'>
                         <div className='flex justify-end'>
 

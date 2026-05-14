@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard';
 import ExpenseModal from './components/ExpenseModal';
 import Navbar from './components/Navbar';
 import UsersExpensesCards from './components/UsersExpensesCards';
+import ExpenseCharts from './components/ExpenseCharts';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route path='/navbar' element={<Navbar />}>Navbar</Route>
           <Route path='/expensemodal' element={<ExpenseModal />}>Expense Modal</Route>
           <Route path='/usersexpensescard' element={<UsersExpensesCards />}>User's Expenses Cards</Route>
+          <Route path='/expensecharts' element={<ExpenseCharts />}>Expense's Charts</Route>
         </Routes>
         <ToastContainer position='top-center' autoClose={1000} />
       </BrowserRouter>
