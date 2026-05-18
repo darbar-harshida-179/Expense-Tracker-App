@@ -1,11 +1,19 @@
 // frontend/src/components/UserExpensesCards.jsx
 
-import React from 'react'
+import React, { useState } from 'react'
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Navbar from './Navbar';
+import AddExpenseModal from './AddExpenseModal';
+import EditExpenseModal from './EditExpenseModal';
+import DeleteExpenseModal from './DeleteExpenseModal';
 
 function UsersExpensesCards() {
+
+    const [openModal, setOpenModal] = useState(false);
+    const [openEditModal, setOpenEditModal] = useState(false);
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
+    const [selectedExpense, setSelectedExpense] = useState(null);
 
     const expenses = [
         {
@@ -47,9 +55,36 @@ function UsersExpensesCards() {
     ]
     return (
         <>
+        {
+            openModal && (
+                <AddExpenseModal
+                    setOpenModal={setOpenModal}
+                />
+            )
+        }
+
+            {
+                openEditModal && (
+                    <EditExpenseModal
+                        selectedExpense={selectedExpense}
+                        setOpenEditModal={setOpenEditModal}
+                    />
+                )
+            }
+            {
+                openDeleteModal && (
+                    <DeleteExpenseModal
+                        selectedExpense={selectedExpense}
+                        setOpenDeleteModal={setOpenDeleteModal}
+                    />
+                )
+            }
             <div className='min-h-screen bg-[#D9EAFD]'>
-                   <Navbar showBackButton={true} />
+                <div className='px-4 sm:px-6 pt-6'>
+                    <Navbar showBackButton={true} setOpenModal={setOpenModal}/>
+                </div>
                 <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5 gap-6 w-full mt-10 px-6'>
+
 
                     {expenses.map((expense, i) => (
                         <div
@@ -58,9 +93,33 @@ function UsersExpensesCards() {
 
                             <div className='flex items-start justify-between'>
                                 <h1 className='text-[#154D71] font-bold text-lg lg:text-xl'>Expense: {expense.title}</h1>
-                                <div className='flex gap-1 py-1'>
-                                    <FaEdit size={20} className='text-green-600 cursor-pointer' />
-                                    <MdDelete size={21} className='text-red-600 cursor-pointer' />
+                                <div className='flex gap-3 py-1'>
+                                    <button
+                                        onClick={() => {
+                                            setSelectedExpense(expense);
+                                            setOpenEditModal(true);
+                                        }}
+                                        className='w-10 h-10 rounded-xl bg-green-50 hover:bg-green-100 flex justify-center items-center transition cursor-pointer'>
+
+                                        <FaEdit
+                                            size={18}
+                                            className='text-green-600'
+                                        />
+                                    </button>
+
+                                    <button
+                                        onClick={() => {
+                                            setSelectedExpense(expense);
+                                            setOpenDeleteModal(true);
+                                        }}
+                                        className='w-10 h-10 rounded-xl bg-red-50 hover:bg-red-100 flex justify-center items-center transition cursor-pointer'>
+
+                                        <MdDelete
+                                            size={18}
+                                            className='text-red-500'
+                                        />
+
+                                    </button>
                                 </div>
                             </div>
 

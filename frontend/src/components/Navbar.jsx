@@ -2,176 +2,256 @@
 
 import React, { useState } from 'react'
 import { FaRegUserCircle } from "react-icons/fa";
-import { GiHamburgerMenu } from "react-icons/gi";
 import { MdOutlineLogout } from "react-icons/md";
-import { IoArrowBackSharp } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
+import { IoArrowBack } from "react-icons/io5";
+import { RxHamburgerMenu } from "react-icons/rx";
+import Calender from './Calender';
 
-function Navbar({ showBackButton = false }) {
+function Navbar({ setOpenModal, showBackButton = false }) {
+
+    const [openProfile, setOpenProfile] = useState(false);
+    const [logoutModal, setLogoutModal] = useState(false);
+    const [openCalendar, setOpenCalendar] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [openMenu, setOpenMenu] = useState(false);
+
 
     const navigate = useNavigate();
 
-    const [openMenu, setOpenMenu] = useState(false);
-    const [logoutModal, setLogoutModal] = useState(false);
-
     return (
         <>
-
-            {(openMenu || logoutModal) && (
-                <div
-                    onClick={() => {
-                        setOpenMenu(false);
-                        setLogoutModal(false);
-                    }}
-                    className='fixed inset-0 backdrop-blur-sm z-40'
-                />
-            )}
-
-            <div className='bg-[#154D71] px-4 sm:px-6 py-4 relative z-50'>
-
-                <div className='flex justify-between items-center'>
-
-                    <div className='flex items-center gap-3'>
-                        {showBackButton && (
-                            <IoArrowBackSharp
-                                size={26}
-                                onClick={() => navigate('/dashboard')}
-                                className='text-white cursor-pointer hover:scale-110'
-                            />
-                        )}
-
-                        <h1 className='text-white text-xl sm:text-2xl lg:text-3xl font-semibold'>
-                            Expense Tracker App
-                        </h1>
-
-                    </div>
-
-                    {/* DESKTOP MENU */}
-                    <div className='relative hidden md:block'>
-
-                        <div
-                            onClick={() => setOpenMenu(!openMenu)}
-                            className='flex items-center gap-2 px-4 py-2 border border-white hover:bg-[#123a56] transition rounded-lg cursor-pointer outline-none'
-                        >
-                            <FaRegUserCircle
-                                size={22}
-                                className='text-white'
-                            />
-
-                            <p className='text-white font-medium'>
-                                Harshida
-                            </p>
-                        </div>
-
-                        {
-                            openMenu && (
-                                <div className='absolute right-0 top-16 bg-white shadow-2xl rounded-xl w-48 p-4 z-50'>
-
-                                    <div className='flex items-center gap-2 hover:bg-blue-50 rounded-lg p-2 cursor-pointer outline-none'>
-
-                                        <FaRegUserCircle
-                                            size={22}
-                                            className='text-[#154D71]'
-                                        />
-
-                                        <p className='text-[#154D71] font-medium'>
-                                            Harshida
-                                        </p>
-
-                                    </div>
-
-                                    <button
-                                        onClick={() => {
-                                            setLogoutModal(true);
-                                            setOpenMenu(false);
-                                        }}
-                                        className='flex items-center gap-2 mt-1 text-red-500 hover:bg-red-50 w-full rounded-lg p-2 cursor-pointer outline-none'
-                                    >
-                                        <MdOutlineLogout size={22} />
-                                        Logout
-                                    </button>
-
-                                </div>
-                            )
-                        }
-                    </div>
-
-                    {/* MOBILE MENU */}
-                    <div className='relative md:hidden'>
-
-                        <GiHamburgerMenu
-                            size={26}
-                            onClick={() => setOpenMenu(!openMenu)}
-                            className='text-white cursor-pointer'
-                        />
-
-                        {
-                            openMenu && (
-                                <div className='absolute right-0 top-12 bg-white shadow-2xl rounded-xl w-56 p-4 z-50'>
-
-                                    <div className='flex items-center gap-2 hover:bg-blue-50 rounded-lg p-2 cursor-pointer outline-none'>
-
-                                        <FaRegUserCircle
-                                            size={22}
-                                            className='text-[#154D71]'
-                                        />
-
-                                        <p className='text-[#154D71] font-medium'>
-                                            Harshida
-                                        </p>
-
-                                    </div>
-
-                                    <button
-                                        onClick={() => {
-                                            setLogoutModal(true);
-                                            setOpenMenu(false);
-                                        }}
-                                        className='flex items-center gap-2 mt-3 text-red-500 hover:bg-red-50 w-full rounded-lg p-2 cursor-pointer outline-none'
-                                    >
-                                        <MdOutlineLogout size={22} />
-                                        Logout
-                                    </button>
-
-                                </div>
-                            )
-                        }
-                    </div>
-                </div>
-            </div>
-
             {
                 logoutModal && (
-                    <div className='fixed inset-0 flex justify-center items-center z-50 px-4'>
+                    <div className='fixed inset-0  backdrop-blur-sm flex justify-center items-center z-50 px-4'>
+                        <div className='bg-white rounded-3xl p-8 w-full max-w-md shadow-2xl'>
+                            <h1 className='text-2xl font-bold text-center text-[#154D71]'>
+                                Logout
+                            </h1>
 
-                        <div className='bg-white rounded-2xl shadow-2xl w-full max-w-md p-6'>
-
-                            <p className='text-[#154D71] font-bold text-xl text-center mt-3'>
+                            <p className='text-center text-gray-500 mt-3'>
                                 Are you sure you want to logout?
                             </p>
 
-                            <div className='flex gap-4 mt-6'>
-
+                            <div className='flex gap-4 mt-8'>
                                 <button
-                                    className='w-full py-3 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg cursor-pointer outline-none'
+                                    className='flex-1 bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl font-semibold cursor-pointer outline-none'
                                 >
                                     Yes
                                 </button>
 
                                 <button
                                     onClick={() => setLogoutModal(false)}
-                                    className='w-full py-3 bg-[#154D71] hover:bg-[#123a56] text-white font-semibold rounded-lg cursor-pointer outline-none'
+                                    className='flex-1 bg-[#154D71] hover:bg-[#123a56] text-white py-3 rounded-xl font-semibold cursor-pointer outline-none'
                                 >
                                     No
                                 </button>
-
                             </div>
                         </div>
                     </div>
                 )
             }
+
+            {
+                openCalendar && (
+                    <div className='fixed inset-0 z-50 flex justify-center items-center px-4'>
+                        <div
+                            onClick={() => setOpenCalendar(false)}
+                            className='absolute inset-0 bg-black/20 backdrop-blur-sm'
+                        />
+                        <div className='relative bg-white rounded-3xl shadow-2xl p-4'>
+                            <Calender
+                                selectedDate={selectedDate}
+                                setSelectedDate={setSelectedDate}
+                                setOpenCalendar={setOpenCalendar}
+                            />
+                        </div>
+                    </div>
+                )
+            }
+
+            <div className='bg-white rounded-3xl shadow-sm px-6 py-5 flex items-start justify-between lg:items-center'>
+                <div className='flex items-center gap-3'>
+                    {
+                        showBackButton && (
+                            <div
+                                onClick={() => navigate('/dashboard')}
+                                className='w-11 h-11 rounded-xl bg-[#edf5ff] flex justify-center items-center cursor-pointer hover:bg-[#dbeafe] transition'
+                            >
+                                <IoArrowBack
+                                    size={22}
+                                    className='text-[#154D71]'
+                                />
+                            </div>
+                        )
+                    }
+
+                    <div>
+                        <h1 className='text-3xl font-bold text-[#154D71]'>
+                            {
+                                showBackButton
+                                    ? "Your Expenses"
+                                    : "Dashboard"
+                            }
+                        </h1>
+
+                        <p className='text-gray-500 mt-1'>
+                            {
+                                showBackButton
+                                    ? "Track and manage all expenses"
+                                    : "Financial overview dashboard"
+                            }
+                        </p>
+                    </div>
+                </div>
+
+                <div className='flex items-center gap-3'>
+                    <div className='hidden lg:flex items-center gap-3'>
+                        <button
+                            onClick={() => setOpenCalendar(true)}
+                            className='bg-white border border-gray-200 px-5 py-3 rounded-xl font-semibold shadow-sm hover:shadow-md cursor-pointer outline-none'
+                        >
+                            {selectedDate.toLocaleString('default', {
+                                month: 'long',
+                                year: 'numeric'
+                            })}
+                        </button>
+
+                        <button
+                            onClick={() => setOpenModal(true)}
+                            className='bg-[#154D71] text-white px-5 py-3 rounded-xl font-semibold hover:bg-[#123a56] shadow-lg cursor-pointer outline-none'
+                        >
+                            + Add Expense
+                        </button>
+
+                        <button
+                            onClick={() => navigate('/usersexpensescards')}
+                            className='bg-[#154D71] text-white px-5 py-3 rounded-xl font-semibold hover:bg-[#123a56] shadow-lg cursor-pointer outline-none'
+                        >
+                            View Expense
+                        </button>
+
+                        <div className='relative'>
+
+                            <div
+                                onClick={() => setOpenProfile(!openProfile)}
+                                className='flex items-center gap-2 bg-[#edf5ff] px-4 py-3 rounded-xl cursor-pointer'
+                            >
+
+                                <FaRegUserCircle
+                                    size={22}
+                                    className='text-[#154D71]'
+                                />
+
+                                <p className='font-semibold text-[#154D71]'>
+                                    Harshida
+                                </p>
+
+                            </div>
+
+                            {
+                                openProfile && (
+                                    <>
+
+                                        <div
+                                            onClick={() => setOpenProfile(false)}
+                                            className='fixed inset-0 z-40'
+                                        />
+
+                                        <div className='absolute right-0 top-20 w-32 bg-white rounded-2xl shadow-2xl p-2 z-50'>
+
+                                            <button
+                                                onClick={() => {
+                                                    setOpenProfile(false);
+                                                    setLogoutModal(true);
+                                                }}
+                                                className='flex items-center gap-2 text-red-500 hover:bg-red-50 w-full p-3 rounded-xl cursor-pointer'
+                                            >
+                                                <MdOutlineLogout size={20} />
+                                                Logout
+                                            </button>
+
+                                        </div>
+
+                                    </>
+                                )
+                            }
+
+                        </div>
+                    </div>
+
+                    <div className='relative lg:hidden'>
+                        <button
+                            onClick={() => setOpenMenu(!openMenu)}
+                            className='w-12 h-12 rounded-xl bg-[#154D71] flex justify-center items-center'
+                        >
+                            <RxHamburgerMenu
+                                size={24}
+                                className='text-white'
+                            />
+                        </button>
+
+                        {
+                            openMenu && (
+                                <>
+                                    <div
+                                        onClick={() => setOpenMenu(false)}
+                                        className='fixed inset-0 z-40'
+                                    />
+
+                                    <div className='absolute -right-2 top-24 w-64 bg-white rounded-3xl shadow-2xl p-4 z-50'>
+                                        <button
+                                            onClick={() => {
+                                                setOpenMenu(false);
+                                                setOpenCalendar(true);
+                                            }}
+                                            className='w-full border border-gray-200 py-3 rounded-xl font-semibold outline-none'
+                                        >
+                                            {selectedDate.toLocaleString('default', {
+                                                month: 'long',
+                                                year: 'numeric'
+                                            })}
+                                        </button>
+
+                                        <button
+                                            onClick={() => {
+                                                setOpenMenu(false);
+                                                setOpenModal(true);
+                                            }}
+                                            className='w-full bg-[#154D71] text-white py-3 rounded-xl font-semibold mt-3 outline-none'
+                                        >
+                                            + Add Expense
+                                        </button>
+
+                                        <button
+                                            onClick={() => {
+                                                setOpenMenu(false);
+                                                navigate('/usersexpensescards');
+                                            }}
+                                            className='w-full bg-[#154D71] text-white py-3 rounded-xl font-semibold mt-3 outline-none'
+                                        >
+                                            View Expense
+                                        </button>
+
+                                        <button
+                                            onClick={() => {
+                                                setOpenMenu(false);
+                                                setLogoutModal(true);
+                                            }}
+                                            className='w-full flex justify-center items-center gap-2 text-red-500 border border-red-100 py-3 rounded-xl font-semibold mt-3 outline-none'
+                                        >
+                                            <MdOutlineLogout size={20} />
+                                            Logout
+                                        </button>
+
+                                    </div>
+                                </>
+                            )
+                        }
+                    </div>
+                </div>
+            </div>
         </>
     )
 }
-
 export default Navbar

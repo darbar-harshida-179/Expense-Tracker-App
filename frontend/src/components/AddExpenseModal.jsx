@@ -5,7 +5,16 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { ImCancelCircle } from "react-icons/im";
-function ExpenseModal({ setOpenModal }) {
+import { BiSolidDownArrow } from "react-icons/bi";
+import Select from 'react-select';
+
+function AddExpenseModal({ setOpenModal }) {
+
+    const categoryOptions = [
+        { value: 'food', label: 'Food' },
+        { value: 'groceries', label: 'Groceries' },
+        { value: 'stationary', label: 'Stationary' }
+    ];
     const formik = useFormik({
         initialValues: {
             title: "",
@@ -30,9 +39,12 @@ function ExpenseModal({ setOpenModal }) {
 
     return (
         <>
-            <div className='fixed inset-0 backdrop-blur-sm flex justify-center items-center px-3 z-50'>
-                <form onSubmit={formik.handleSubmit} className='bg-white shadow-lg rounded-lg w-full max-w-md'>
-                    <div className='p-5'>
+            <div className='fixed inset-0 backdrop-blur-sm flex justify-center items-center px-3 z-50 overflow-y-auto'>
+                <form
+                    onSubmit={formik.handleSubmit}
+                    className='relative z-50 bg-white shadow-2xl rounded-3xl w-full max-w-md overflow-visible'
+                >
+                    <div className='p-8'>
                         <div className='flex justify-end'>
 
                             <ImCancelCircle
@@ -81,17 +93,47 @@ function ExpenseModal({ setOpenModal }) {
                             }
                         </div>
 
-                        <div className='mt-2'>
-                            <label className='font-semibold text-[#154D71]'>Category</label>
-                            <select className='w-full px-3 py-2 border border-[#154D71] cursor-pointer outline-none rounded mt-1'>
-                                <option value=""></option>
-                                <option value="food">Food</option>
-                                <option value="groceries">Groceries</option>
-                                <option value="stationary">Stationary</option>
-                                {formik.touched.category && formik.errors.category &&
-                                    <p className='text-red-500'>{formik.errors.category}</p>}
-                            </select>
+                        <div className='mt-4'>
+                            <label className='font-semibold text-[#154D71] block mb-2'>
+                                Category
+                            </label>
 
+                            <div className='relative w-full'>
+                                <Select
+                                    options={categoryOptions}
+                                    placeholder="Select Category"
+                                    menuPortalTarget={document.body}
+                                    menuPosition="fixed"
+                                    value={
+                                        categoryOptions.find(
+                                            option => option.value === formik.values.category
+                                        )
+                                    }
+                                    onChange={(selectedOption) => {
+                                        formik.setFieldValue('category', selectedOption.value);
+                                    }}
+                                    styles={{
+                                        control: (base) => ({
+                                            ...base,
+                                            borderRadius: '12px',
+                                            borderColor: '#154D71',
+                                            padding: '6px'
+                                        }),
+                                        menuPortal: (base) => ({
+                                            ...base,
+                                            zIndex: 9999
+                                        })
+                                    }}
+                                />
+                            </div>
+
+                            {
+                                formik.touched.category && formik.errors.category && (
+                                    <p className='text-red-500 text-sm mt-1'>
+                                        {formik.errors.category}
+                                    </p>
+                                )
+                            }
                         </div>
 
                         <button
@@ -105,4 +147,4 @@ function ExpenseModal({ setOpenModal }) {
     )
 }
 
-export default ExpenseModal
+export default AddExpenseModal

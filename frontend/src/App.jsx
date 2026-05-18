@@ -7,10 +7,10 @@ import { ToastContainer } from 'react-toastify';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
-import ExpenseModal from './components/ExpenseModal';
 import Navbar from './components/Navbar';
 import UsersExpensesCards from './components/UsersExpensesCards';
 import ExpenseCharts from './components/ExpenseCharts';
+import AddExpenseModal from './components/AddExpenseModal';
 
 function App() {
 
@@ -23,8 +23,8 @@ function App() {
           <Route path='/signup' element={<SignUp />}>Sign Up</Route>
           <Route path='/dashboard' element={<Dashboard />}>Dashboard</Route>
           <Route path='/navbar' element={<Navbar />}>Navbar</Route>
-          <Route path='/expensemodal' element={<ExpenseModal />}>Expense Modal</Route>
-          <Route path='/usersexpensescard' element={<UsersExpensesCards />}>User's Expenses Cards</Route>
+          <Route path='/addexpensemodal' element={< AddExpenseModal />}>Add Expense Modal</Route>
+          <Route path='/usersexpensescards' element={<UsersExpensesCards />}>User's Expenses Cards</Route>
           <Route path='/expensecharts' element={<ExpenseCharts />}>Expense's Charts</Route>
         </Routes>
         <ToastContainer position='top-center' autoClose={1000} />
