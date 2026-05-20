@@ -8,12 +8,14 @@ import { ImCancelCircle } from "react-icons/im";
 import { BiSolidDownArrow } from "react-icons/bi";
 import Select from 'react-select';
 
-function AddExpenseModal({ setOpenModal }) {
+function AddExpenseModal({ setOpenModal, handleAddExpense }) {
 
     const categoryOptions = [
         { value: 'food', label: 'Food' },
         { value: 'groceries', label: 'Groceries' },
-        { value: 'stationary', label: 'Stationary' }
+        { value: 'stationary', label: 'Stationary' },
+        { value: 'shopping', label: 'Shopping' },
+        { value: 'trip', label: 'Trip' }
     ];
     const formik = useFormik({
         initialValues: {
@@ -26,12 +28,14 @@ function AddExpenseModal({ setOpenModal }) {
             amount: Yup.string().trim().required("Amount is required"),
             category: Yup.string().trim().required("Category is required")
         }),
-        onSubmit(values, { resetForm }) {
+        onSubmit: async (values, { resetForm }) => {
             try {
+                await handleAddExpense(values);
                 console.log(values);
                 toast.success("Expense Added Successfully!");
+                resetForm();
+                setOpenModal(false);
             } catch (err) {
-                console.log("error", err.message);
                 toast.error(err.message);
             }
         }
@@ -46,11 +50,9 @@ function AddExpenseModal({ setOpenModal }) {
                 >
                     <div className='p-8'>
                         <div className='flex justify-end'>
-
                             <ImCancelCircle
                                 onClick={() => setOpenModal(false)}
                                 size={23} className='text-[#154D71] cursor-pointer' />
-
                         </div>
 
                         <h1 className='text-[#154D71] text-2xl text-center font-bold'>Add Expense</h1>
@@ -126,7 +128,6 @@ function AddExpenseModal({ setOpenModal }) {
                                     }}
                                 />
                             </div>
-
                             {
                                 formik.touched.category && formik.errors.category && (
                                     <p className='text-red-500 text-sm mt-1'>
@@ -135,7 +136,6 @@ function AddExpenseModal({ setOpenModal }) {
                                 )
                             }
                         </div>
-
                         <button
                             type='submit'
                             className='w-full px-3 py-2 bg-[#154D71] text-white font-semibold rounded cursor-pointer outline-none mt-3 hover:bg-[#123a56]'>
@@ -146,5 +146,4 @@ function AddExpenseModal({ setOpenModal }) {
         </>
     )
 }
-
 export default AddExpenseModal

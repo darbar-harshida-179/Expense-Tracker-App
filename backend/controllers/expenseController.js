@@ -5,7 +5,6 @@ import Expense from "../models/Expense.js";
 export const addExpense = async (req, res) => {
 
     try {
-
         const { title, amount, category } = req.body;
 
         if (!title || !amount || !category) {
@@ -21,7 +20,7 @@ export const addExpense = async (req, res) => {
 
         await newExpense.save();
 
-        res.status(201).json({ message: "Expense Added Successfully!" });
+        res.status(201).json({ message: "Expense Added Successfully!", data: newExpense });
 
     } catch (err) {
 
@@ -29,7 +28,6 @@ export const addExpense = async (req, res) => {
 
     }
 };
-
 export const getExpenses = async (req, res) => {
 
     try {
@@ -54,7 +52,7 @@ export const updateExpense = async (req, res) => {
             req.body,
             { new: true }
         );
-        if (!updatedExpense) { 
+        if (!updatedExpense) {
             return res.status(404).json({ message: "Expense Not Found" });
         }
         res.status(200).json({ message: "Expense Updated Successfully!", data: updatedExpense });

@@ -37,7 +37,6 @@ function ExpenseCharts({ type }) {
     return (
 
         <div className='bg-white rounded-3xl shadow-sm p-6 hover:shadow-xl transition duration-300'>
-
             <div className='mb-6'>
                 <h1 className='text-xl font-bold text-[#154D71]'>
                     {

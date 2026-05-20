@@ -7,7 +7,6 @@ import bcrypt from 'bcryptjs';
 export const register = async (req, res) => {
 
     try {
-
         const { name, email, password } = req.body;
 
         if (!name || !email || !password) {
@@ -47,7 +46,6 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
 
     try {
-
         const { email, password } = req.body;
 
         if (!email || !password) {
@@ -66,9 +64,9 @@ export const login = async (req, res) => {
         if (!isMatch) {
             return res.status(400).json({ message: "Wrong Password!" });
         }
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+        const token = jwt.sign({ id: user._id, name: user.name, email: user.email }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
-        res.status(200).json({ message: "Login Successful", token });
+        res.status(200).json({ message: "Login Successful", token, user: { _id: user._id, name: user.name, email: user.email } });
 
     } catch (err) {
 

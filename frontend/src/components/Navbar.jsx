@@ -16,8 +16,15 @@ function Navbar({ setOpenModal, showBackButton = false }) {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [openMenu, setOpenMenu] = useState(false);
 
-
     const navigate = useNavigate();
+
+    const user = JSON.parse(localStorage.getItem(("user")));
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        navigate('/login');
+    }
 
     return (
         <>
@@ -35,6 +42,7 @@ function Navbar({ setOpenModal, showBackButton = false }) {
 
                             <div className='flex gap-4 mt-8'>
                                 <button
+                                    onClick={handleLogout}
                                     className='flex-1 bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl font-semibold cursor-pointer outline-none'
                                 >
                                     Yes
@@ -76,8 +84,7 @@ function Navbar({ setOpenModal, showBackButton = false }) {
                         showBackButton && (
                             <div
                                 onClick={() => navigate('/dashboard')}
-                                className='w-11 h-11 rounded-xl bg-[#edf5ff] flex justify-center items-center cursor-pointer hover:bg-[#dbeafe] transition'
-                            >
+                                className='w-11 h-11 rounded-xl bg-[#edf5ff] flex justify-center items-center cursor-pointer hover:bg-[#dbeafe]'>
                                 <IoArrowBack
                                     size={22}
                                     className='text-[#154D71]'
@@ -144,7 +151,7 @@ function Navbar({ setOpenModal, showBackButton = false }) {
                                 />
 
                                 <p className='font-semibold text-[#154D71]'>
-                                    Harshida
+                                    {user?.name}
                                 </p>
 
                             </div>
@@ -199,13 +206,24 @@ function Navbar({ setOpenModal, showBackButton = false }) {
                                         className='fixed inset-0 z-40'
                                     />
 
-                                    <div className='absolute -right-2 top-24 w-64 bg-white rounded-3xl shadow-2xl p-4 z-50'>
+                                    <div className='absolute -right-2 top-28 w-64 bg-white rounded-3xl shadow-2xl p-4 z-50'>
+                                        <div className='flex justify-center gap-2 bg-[#edf5ff] px-4 py-3 rounded-xl cursor-pointer'>
+
+                                            <FaRegUserCircle
+                                                size={22}
+                                                className='text-[#154D71]'
+                                            />
+
+                                            <p className='font-semibold text-[#154D71]'>
+                                                {user?.name}
+                                            </p>
+                                        </div>
                                         <button
                                             onClick={() => {
                                                 setOpenMenu(false);
                                                 setOpenCalendar(true);
                                             }}
-                                            className='w-full border border-gray-200 py-3 rounded-xl font-semibold outline-none'
+                                            className='w-full border border-gray-200 py-3 mt-3 rounded-xl font-semibold outline-none'
                                         >
                                             {selectedDate.toLocaleString('default', {
                                                 month: 'long',

@@ -24,14 +24,15 @@ router.get('/google/callback',
     }),
     (req, res) => {
         const token = jwt.sign(
-            { id: req.user._id },
+            {
+                id: req.user._id,
+                name: req.user.name,
+                email: req.user.email
+            },
             process.env.JWT_SECRET,
-            { expiredIn: "7d" }
+            { expiresIn: "7d" }
         );
-        res.json({
-            message: "Google Login Successfull!",
-            token
-        });
+        res.redirect(`http://localhost:5173/google-success?token=${token}`);
     }
 )
 

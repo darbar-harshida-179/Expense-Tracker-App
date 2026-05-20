@@ -9,13 +9,16 @@ import { toast } from 'react-toastify';
 
 function EditExpenseModal({
     selectedExpense,
-    setOpenEditModal
+    setOpenEditModal,
+    handleUpdateExpense
 }) {
 
     const categoryOptions = [
         { value: 'food', label: 'Food' },
         { value: 'groceries', label: 'Groceries' },
-        { value: 'stationary', label: 'Stationary' }
+        { value: 'stationary', label: 'Stationary' },
+        { value: 'shopping', label: 'Shopping' },
+        { value: 'trip', label: 'Trip' }
     ];
 
     const formik = useFormik({
@@ -33,21 +36,23 @@ function EditExpenseModal({
             category: Yup.string().required("Category is required")
         }),
 
-        onSubmit(values) {
-            console.log(values);
-            toast.success("Expense Updated Successfully!");
-            setOpenEditModal(false);
+        onSubmit: async (values) => {
+            try {
+                await handleUpdateExpense(selectedExpense._id, values);
+                toast.success("Expense Updated Successfully!");
+                setOpenEditModal(false);
+            } catch (error) {
+                console.log("Update Error:-", error);
+            }
         }
     });
 
     return (
         <div className='fixed inset-0 backdrop-blur-sm flex justify-center items-center px-4 z-50'>
-
             <form
                 onSubmit={formik.handleSubmit}
                 className='bg-white rounded-3xl shadow-2xl w-full max-w-md p-8'
             >
-
                 <div className='flex justify-end'>
                     <ImCancelCircle
                         size={24}
@@ -115,16 +120,13 @@ function EditExpenseModal({
                         }}
                     />
                 </div>
-
                 <button
                     type='submit'
                     className='w-full bg-[#154D71] text-white py-3 rounded-xl mt-5 font-semibold cursor-pointer outline-none'
                 >
                     Update Expense
                 </button>
-
             </form>
-
         </div>
     );
 }

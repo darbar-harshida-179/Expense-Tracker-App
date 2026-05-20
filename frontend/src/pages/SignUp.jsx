@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { IoEyeSharp } from "react-icons/io5";
 import { PiEyeSlashFill } from "react-icons/pi";
+import { registerUser } from '../services/authServices';
 
 function SignUp() {
 
@@ -27,14 +28,14 @@ function SignUp() {
       email: Yup.string().trim().required("Emaiil is required").email("enter valid email"),
       password: Yup.string().trim().required("Password is required").min(6, 'atleast 6 character is required')
     }),
-    onSubmit(values, { resetForm }) {
+    onSubmit: async (values, { resetForm }) => {
       try {
-        console.log("Registration successfull!", values);
+        const response = await registerUser(values);
         resetForm();
         toast.success("Registration Successfull, Please Login!");
         navigate('/login');
       } catch (err) {
-        console.log("Error:-", err.message);
+        toast.error(err.response?.data?.message || "Registration Failed...");
         toast.error("Error:-", err.message);
       }
     }
@@ -99,16 +100,19 @@ function SignUp() {
                 <p className='text-red-500'>{formik.errors.password}</p>
               )}
             </div>
+
             <button
               type='submit'
               className='w-full h-10 mt-6 bg-[#154D71] text-white font-semibold rounded outline-none cursor-pointer  hover:bg-[#123a56]'>Sign Up
             </button>
+
             <p className='font-semibold text-gray-700 mt-3 text-center'>Already have an account?
               <span
                 onClick={() => navigate('/login')}
                 className='text-[#154D71] cursor-pointer'>Login
               </span>
             </p>
+            
           </form>
         </div>
       </div>

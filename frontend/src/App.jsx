@@ -1,4 +1,4 @@
-// frontend/src/app.jsx
+ // frontend/src/app.jsx
 
 import './App.css'
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,6 +11,7 @@ import Navbar from './components/Navbar';
 import UsersExpensesCards from './components/UsersExpensesCards';
 import ExpenseCharts from './components/ExpenseCharts';
 import AddExpenseModal from './components/AddExpenseModal';
+import GoogleSuccess from './pages/GoogleSuccess';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path='/' element={<Login />}></Route>
           <Route path='/login' element={<Login />}>Login</Route>
           <Route path='/signup' element={<SignUp />}>Sign Up</Route>
+          <Route path='/google-success' element={<GoogleSuccess/>}></Route>
           <Route path='/dashboard' element={<Dashboard />}>Dashboard</Route>
           <Route path='/navbar' element={<Navbar />}>Navbar</Route>
           <Route path='/addexpensemodal' element={< AddExpenseModal />}>Add Expense Modal</Route>
@@ -32,5 +34,4 @@ function App() {
     </>
   )
 }
-
 export default App

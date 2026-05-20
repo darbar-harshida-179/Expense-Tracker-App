@@ -1,6 +1,6 @@
 // frontend/src/pages/Dashboard.jsx
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Navbar from '../components/Navbar'
 import SummaryCard from '../components/SummaryCard'
@@ -8,13 +8,25 @@ import ExpenseCharts from '../components/ExpenseCharts'
 import RecentTransactions from '../components/RecentTransactions'
 import BudgetTracker from '../components/BudgetTracker'
 import AddExpenseModal from '../components/AddExpenseModal'
+import { addExpense } from '../services/expenseServices'
 
 function Dashboard() {
 
     const [openModal, setOpenModal] = useState(false);
 
-    return (
 
+    const handleAddExpense = async (values) => {
+        try {
+            const response = await addExpense(values);
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.log("Add Expense Error:--", error);
+            throw error;
+        }
+    }
+
+    return (
         <div className='min-h-screen bg-[#edf5ff] p-4 lg:p-7'>
             <Navbar setOpenModal={setOpenModal} />
 
@@ -61,7 +73,7 @@ function Dashboard() {
 
             {
                 openModal &&
-                <AddExpenseModal setOpenModal={setOpenModal} />
+                <AddExpenseModal setOpenModal={setOpenModal} handleAddExpense={handleAddExpense} />
             }
 
         </div>
