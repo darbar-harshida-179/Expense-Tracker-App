@@ -29,13 +29,9 @@ function BudgetTracker({ expenses }) {
         <div className='bg-white rounded-3xl shadow-sm p-6 h-full'>
             <div className='flex justify-between items-center'>
                 <div>
-                    <h1 className='text-2xl font-bold text-[#154D71]'>
-                        Budget Tracker
-                    </h1>
+                    <h1 className='text-2xl font-bold text-[#154D71]'> Budget Tracker </h1>
 
-                    <p className='text-gray-500 mt-1'>
-                        Monthly budget usage
-                    </p>
+                    <p className='text-gray-500 mt-1'> Monthly budget usage </p>
                 </div>
             </div>
 
@@ -55,10 +51,7 @@ function BudgetTracker({ expenses }) {
 
                             const limit = budgetLimits[category] || 10000;
 
-                            const percentage = Math.min(
-                                (spent / limit) * 100,
-                                100
-                            );
+                            const percentage = Math.min((spent / limit) * 100, 100);
 
                             return (
 
@@ -66,24 +59,15 @@ function BudgetTracker({ expenses }) {
 
                                     <div className='flex justify-between mb-2'>
 
-                                        <p className='font-semibold capitalize'>
-                                            {category}
-                                        </p>
+                                        <p className='font-semibold capitalize'>{category}</p>
 
-                                        <p>
-                                            ₹{spent} / ₹{limit}
-                                        </p>
+                                        <p>₹{spent} / ₹{limit}</p>
 
                                     </div>
 
                                     <div className='w-full bg-gray-200 h-3 rounded-full overflow-hidden'>
 
-                                        <div
-                                            style={{
-                                                width: `${percentage}%`
-                                            }}
-                                            className='bg-[#154D71] h-full rounded-full'
-                                        />
+                                        <div style={{ width: `${percentage}%` }} className='bg-[#154D71] h-full rounded-full' />
 
                                     </div>
 
@@ -92,9 +76,6 @@ function BudgetTracker({ expenses }) {
                         })
                     )
                 }
-
-
-
             </div>
         </div>
     )

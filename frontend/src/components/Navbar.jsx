@@ -139,17 +139,14 @@ function Navbar({ setOpenModal, showBackButton = false, selectedDate = new Date(
 
                             <div
                                 onClick={() => setOpenProfile(!openProfile)}
-                                className='flex items-center gap-2 bg-[#edf5ff] px-4 py-3 rounded-xl cursor-pointer'
-                            >
+                                className='flex items-center gap-2 bg-[#edf5ff] px-4 py-3 rounded-xl cursor-pointer'>
 
                                 <FaRegUserCircle
                                     size={22}
                                     className='text-[#154D71]'
                                 />
 
-                                <p className='font-semibold text-[#154D71]'>
-                                    {user?.name}
-                                </p>
+                                <p className='font-semibold text-[#154D71]'> {user?.name} </p>
 
                             </div>
 
@@ -163,7 +160,6 @@ function Navbar({ setOpenModal, showBackButton = false, selectedDate = new Date(
                                         />
 
                                         <div className='absolute right-0 top-20 w-32 bg-white rounded-2xl shadow-2xl p-2 z-50'>
-
                                             <button
                                                 onClick={() => {
                                                     setOpenProfile(false);

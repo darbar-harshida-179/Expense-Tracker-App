@@ -22,11 +22,9 @@ function DeleteExpenseModal({
                     <span className='font-semibold text-[#154D71]'>
                         {" "} {selectedExpense?.title}
                     </span>
-                    
                 </p>
 
                 <div className='flex gap-4 mt-8'>
-
                     <button
                         onClick={() => handleDeleteExpense(selectedExpense._id)}
                         className='flex-1 bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl font-semibold cursor-pointer outline-none'
