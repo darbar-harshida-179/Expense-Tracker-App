@@ -18,6 +18,7 @@ function UsersExpensesCards() {
     const [selectedExpense, setSelectedExpense] = useState(null);
     const [expenses, setExpenses] = useState([]);
     const [editExpense, setEditExpense] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
     useEffect(() => {
         fetchExpenses();
@@ -69,6 +70,14 @@ function UsersExpensesCards() {
             throw error;
         }
     }
+
+    const filteredExpenses = expenses.filter((expense) => {
+        const expenseDate = new Date(expense.createdAt);
+        return (
+            expenseDate.getMonth() === selectedDate.getMonth() &&
+            expenseDate.getFullYear() === selectedDate.getFullYear()
+        )
+    });
     return (
         <>
             {
@@ -101,15 +110,15 @@ function UsersExpensesCards() {
             }
             <div className='min-h-screen bg-[#D9EAFD]'>
                 <div className='px-4 sm:px-6 pt-6'>
-                    <Navbar showBackButton={true} setOpenModal={setOpenModal} />
+                    <Navbar showBackButton={true} setOpenModal={setOpenModal} selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
                 </div>
-                {expenses.length === 0 ? (
+                {filteredExpenses.length === 0 ? (
                     <p className='min-h-screen w-full flex justify-center items-center text-xl font-semibold text-gray-500'>No Expenses Found! </p>
                 )
                     : (
                         <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5 gap-6 w-full mt-10 px-6'>
 
-                            {expenses.map((expense) => (
+                            {filteredExpenses.map((expense) => (
                                 <div
                                     key={expense._id}
                                     className='bg-white rounded-2xl shadow-lg p-6 w-full cursor-pointer hover:shadow-2xl '>

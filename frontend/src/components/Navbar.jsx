@@ -58,7 +58,6 @@ function Navbar({ setOpenModal, showBackButton = false, selectedDate = new Date(
                     </div>
                 )
             }
-
             {
                 openCalendar && (
                     <div className='fixed inset-0 z-50 flex justify-center items-center px-4'>
