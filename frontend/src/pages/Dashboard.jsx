@@ -49,7 +49,7 @@ function Dashboard() {
     }
 
     const filteredExpenses = expenses.filter((expense) => {
-        const expenseDate = new Date(expense.createdAt);
+        const expenseDate = new Date(expense.date);
 
         return (
             expenseDate.getMonth() === selectedDate.getMonth() &&

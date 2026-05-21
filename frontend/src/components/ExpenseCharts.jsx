@@ -38,7 +38,7 @@ function ExpenseCharts({ type, expenses }) {
     const monthlyMap = {};
 
     expenses.forEach((expense) => {
-        const date = new Date(expense.createdAt);
+        const date = new Date(expense.date);
         const month = date.toLocaleString('default', {
             month: 'short'
         });

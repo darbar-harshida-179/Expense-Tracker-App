@@ -61,7 +61,7 @@ function RecentTransactions({ expenses }) {
                                     ₹ {item.amount}
                                 </h1>
                                 <p className='text-gray-500 text-sm'>
-                                    {new Date(item.createdAt).toLocaleDateString("en-IN")}
+                                    {new Date(item.date).toLocaleDateString("en-IN")}
                                 </p>
                             </div>
                         </div>

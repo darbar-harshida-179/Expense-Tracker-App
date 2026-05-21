@@ -21,12 +21,14 @@ function AddExpenseModal({ setOpenModal, handleAddExpense }) {
         initialValues: {
             title: "",
             amount: "",
-            category: ""
+            category: "",
+            date: new Date().toISOString().split("T")[0]
         },
         validationSchema: Yup.object({
             title: Yup.string().trim().required("Title is required"),
             amount: Yup.string().trim().required("Amount is required"),
-            category: Yup.string().trim().required("Category is required")
+            category: Yup.string().trim().required("Category is required"),
+            date: Yup.string().required("Date is required.")
         }),
         onSubmit: async (values, { resetForm }) => {
             try {
@@ -93,6 +95,17 @@ function AddExpenseModal({ setOpenModal, handleAddExpense }) {
                                 formik.touched.amount && formik.errors.amount &&
                                 <p className='text-red-500'>{formik.errors.amount}</p>
                             }
+                        </div>
+
+                        <div className='mt-4'>
+                            <label className='font-semibold text-[#154D71]'>Date</label>
+                            <input 
+                                type="date"
+                                name='date'
+                                value={formik.values.date}
+                                onChange={formik.handleChange}
+                                className='w-full px-3 py-2 border border-[#154D71] text-[#154D71] outline-none rounded mt-1'
+                             />
                         </div>
 
                         <div className='mt-4'>
