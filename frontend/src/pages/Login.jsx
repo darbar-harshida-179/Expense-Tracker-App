@@ -13,8 +13,6 @@ import { loginUser } from '../services/authServices';
 function Login() {
 
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
 
   const formik = useFormik({
@@ -29,8 +27,13 @@ function Login() {
     onSubmit: async (values, { resetForm }) => {
       try {
         const response = await loginUser(values);
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
+        // localStorage.setItem('token', response.data.token);
+        // localStorage.setItem("user", JSON.stringify(response.data.user));
+        const appData = {
+          token: response.data.token,
+          user: response.data.user
+        };
+        localStorage.setItem("Expense-Tracker-App", JSON.stringify(appData));
         resetForm();
         toast.success("Login Successfull!");
         navigate('/dashboard')

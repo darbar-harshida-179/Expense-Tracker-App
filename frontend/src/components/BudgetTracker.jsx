@@ -2,7 +2,28 @@
 
 import React from 'react'
 
-function BudgetTracker() {
+function BudgetTracker({ expenses }) {
+
+    const budgetLimits = {
+        food: 20000,
+        groceries: 15000,
+        shopping: 18000,
+        trip: 25000,
+        stationary: 10000
+    }
+    const categoryTotals = {};
+
+    expenses.forEach((expense) => {
+        const category = expense.category.toLowerCase();
+
+        if (categoryTotals[category]) {
+            categoryTotals[category] += Number(expense.amount);
+        } else {
+            categoryTotals[category] = Number(expense.amount);
+        }
+    });
+
+    const hasExpenses = Object.keys(categoryTotals).length > 0;
 
     return (
         <div className='bg-white rounded-3xl shadow-sm p-6 h-full'>
@@ -16,44 +37,64 @@ function BudgetTracker() {
                         Monthly budget usage
                     </p>
                 </div>
-                <p className='text-[#154D71] font-semibold'>
-                    86%
-                </p>
             </div>
 
-            <div className='mt-10'>
-                <div className='mb-8'>
-                    <div className='flex justify-between mb-2'>
-                        <p className='font-semibold'>Food & Dining</p>
-                        <p>₹17k / ₹20k</p>
-                    </div>
+            <div className='mt-10 space-y-8'>
+                {
+                    !hasExpenses ? (
+                        <div className='flex justify-center items-center h-40'>
+                            <p className='text-gray-600 text-lg font-semibold'>
+                                No budget used this month
+                            </p>
+                        </div>
+                    ) : (
 
-                    <div className='w-full bg-gray-200 h-3 rounded-full'>
-                        <div className='bg-[#154D71] h-full w-[86%] rounded-full' />
-                    </div>
-                </div>
+                        Object.keys(categoryTotals).map((category, index) => {
 
-                <div className='mb-8'>
-                    <div className='flex justify-between mb-2'>
-                        <p className='font-semibold'>Shopping</p>
-                        <p>₹12k / ₹18k</p>
-                    </div>
+                            const spent = categoryTotals[category];
 
-                    <div className='w-full bg-gray-200 h-3 rounded-full overflow-hidden'>
-                        <div className='bg-blue-500 h-full w-[60%] rounded-full' />
-                    </div>
-                </div>
-                <div>
+                            const limit = budgetLimits[category] || 10000;
 
-                    <div className='flex justify-between mb-2'>
-                        <p className='font-semibold'>Travel</p>
-                        <p>₹8k / ₹15k</p>
-                    </div>
+                            const percentage = Math.min(
+                                (spent / limit) * 100,
+                                100
+                            );
 
-                    <div className='w-full bg-gray-200 h-3 rounded-full overflow-hidden'>
-                        <div className='bg-cyan-500 h-full w-[43%] rounded-full' />
-                    </div>
-                </div>
+                            return (
+
+                                <div key={index}>
+
+                                    <div className='flex justify-between mb-2'>
+
+                                        <p className='font-semibold capitalize'>
+                                            {category}
+                                        </p>
+
+                                        <p>
+                                            ₹{spent} / ₹{limit}
+                                        </p>
+
+                                    </div>
+
+                                    <div className='w-full bg-gray-200 h-3 rounded-full overflow-hidden'>
+
+                                        <div
+                                            style={{
+                                                width: `${percentage}%`
+                                            }}
+                                            className='bg-[#154D71] h-full rounded-full'
+                                        />
+
+                                    </div>
+
+                                </div>
+                            );
+                        })
+                    )
+                }
+
+
+
             </div>
         </div>
     )

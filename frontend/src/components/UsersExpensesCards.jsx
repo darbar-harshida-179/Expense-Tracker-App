@@ -27,7 +27,6 @@ function UsersExpensesCards() {
         try {
             const response = await getExpenses();
             setExpenses(response.data);
-            console.log(response.data);
         } catch (error) {
             console.log("Fetch Expenses Error:-", error);
         }
@@ -36,10 +35,7 @@ function UsersExpensesCards() {
     const handleAddExpense = async (values) => {
         try {
             const response = await addExpense(values);
-
             setExpenses((prev) => [...prev, response.data.data]);
-            console.log("Add expense data:-",response.data)
-
             setOpenModal(false);
 
         } catch (error) {
@@ -55,7 +51,6 @@ function UsersExpensesCards() {
                 prev.map((expense) =>
                     expense._id === id ? response.data.data : expense)
             );
-            console.log("Update expense data:-", response.data);
         } catch (error) {
             console.log("Update Error:--", error);
             throw error;

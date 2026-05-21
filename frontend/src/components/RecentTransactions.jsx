@@ -2,35 +2,11 @@
 
 import React from 'react';
 import { FaWallet } from "react-icons/fa6";
+import { useNavigate } from 'react-router-dom';
 
-function RecentTransactions() {
+function RecentTransactions({ expenses }) {
 
-    const transactions = [
-        {
-            title: "Big Basket",
-            category: "Food & Groceries",
-            amount: "-₹2,340",
-            time: "Today"
-        },
-        {
-            title: "Amazon",
-            category: "Shopping",
-            amount: "-₹1,250",
-            time: "Yesterday"
-        },
-        {
-            title: "Uber",
-            category: "Travel",
-            amount: "-₹560",
-            time: "2 Days Ago"
-        },
-        {
-            title: "Salary",
-            category: "Income",
-            amount: "+₹45,000",
-            time: "1 May"
-        }
-    ]
+    const navigate = useNavigate();
 
     return (
         <div className='bg-white rounded-3xl shadow-sm p-6'>
@@ -43,17 +19,25 @@ function RecentTransactions() {
                         Latest financial activities
                     </p>
                 </div>
-                <button className='text-[#154D71] font-semibold cursor-pointer outline-none'>
+                <button
+                    onClick={() => navigate('/usersexpensescards')}
+                    className='text-[#154D71] font-semibold cursor-pointer outline-none'>
                     See All
                 </button>
             </div>
 
             <div className='mt-8 space-y-5'>
-                {
-                    transactions.map((item, index) => (
+                {expenses.length === 0 ? (
+                    <div className='flex justify-center items-center h-40'>
+                        <p className='text-gray-600 text-lg font-semibold'>
+                            No Recent Transaction
+                        </p>
+                    </div>
+                ) : (
 
+                    expenses.slice().reverse().slice(0, 5).map((item) => (
                         <div
-                            key={index}
+                            key={item._id}
                             className='flex justify-between items-center border-b border-gray-100 pb-4'
                         >
                             <div className='flex items-center gap-4'>
@@ -73,20 +57,19 @@ function RecentTransactions() {
                             </div>
 
                             <div className='text-right'>
-                                <h1 className={`font-bold text-lg ${item.amount.includes('+')
-                                    ? "text-green-500"
-                                    : "text-red-500"
-                                    }`}>
-                                    {item.amount}
+                                <h1 className='font-bold text-lg text-red-500'>
+                                    ₹ {item.amount}
                                 </h1>
-
                                 <p className='text-gray-500 text-sm'>
-                                    {item.time}
+                                    {new Date(item.createdAt).toLocaleDateString("en-IN")}
                                 </p>
                             </div>
                         </div>
                     ))
+
+                )
                 }
+
             </div>
         </div>
     )

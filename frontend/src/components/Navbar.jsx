@@ -8,21 +8,20 @@ import { IoArrowBack } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Calender from './Calender';
 
-function Navbar({ setOpenModal, showBackButton = false }) {
+function Navbar({ setOpenModal, showBackButton = false, selectedDate = new Date(), setSelectedDate = () => { } }) {
 
     const [openProfile, setOpenProfile] = useState(false);
     const [logoutModal, setLogoutModal] = useState(false);
     const [openCalendar, setOpenCalendar] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(new Date());
     const [openMenu, setOpenMenu] = useState(false);
 
     const navigate = useNavigate();
 
-    const user = JSON.parse(localStorage.getItem(("user")));
+    const appData = JSON.parse(localStorage.getItem('Expense-Tracker-App'));
+    const user = appData?.user;
 
     const handleLogout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        localStorage.removeItem("Expense-Tracker-App");
         navigate('/login');
     }
 
@@ -65,7 +64,7 @@ function Navbar({ setOpenModal, showBackButton = false }) {
                     <div className='fixed inset-0 z-50 flex justify-center items-center px-4'>
                         <div
                             onClick={() => setOpenCalendar(false)}
-                            className='absolute inset-0 bg-black/20 backdrop-blur-sm'
+                            className='absolute inset-0 backdrop-blur-sm'
                         />
                         <div className='relative bg-white rounded-3xl shadow-2xl p-4'>
                             <Calender
@@ -77,7 +76,6 @@ function Navbar({ setOpenModal, showBackButton = false }) {
                     </div>
                 )
             }
-
             <div className='bg-white rounded-3xl shadow-sm px-6 py-5 flex items-start justify-between lg:items-center'>
                 <div className='flex items-center gap-3'>
                     {
@@ -94,7 +92,7 @@ function Navbar({ setOpenModal, showBackButton = false }) {
                     }
 
                     <div>
-                        <h1 className='text-3xl font-bold text-[#154D71]'>
+                        <h1 className='text-2xl sm:text-3xl font-bold text-[#154D71]'>
                             {
                                 showBackButton
                                     ? "Your Expenses"
@@ -102,7 +100,7 @@ function Navbar({ setOpenModal, showBackButton = false }) {
                             }
                         </h1>
 
-                        <p className='text-gray-500 mt-1'>
+                        <p className='text-gray-500 mt-0'>
                             {
                                 showBackButton
                                     ? "Track and manage all expenses"

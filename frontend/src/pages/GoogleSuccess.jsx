@@ -18,15 +18,18 @@ function GoogleSuccess() {
 
             const decoded = jwtDecode(token);
 
-            localStorage.setItem("user", JSON.stringify({
+            const existingData = JSON.parse(localStorage.getItem("Expense-Tracker-App")) || {};
+            existingData.token = token;
+
+            existingData.user = {
                 _id: decoded.id,
                 name: decoded.name,
                 email: decoded.email
-            }));
+            }
+            localStorage.setItem("Expense-Tracker-App", JSON.stringify(existingData));
 
             navigate("/dashboard");
         }
-
     }, []);
     return (
         <div className='min-h-screen w-full flex justify-center items-center text-[#154D71] font-semibold text-2xl'>

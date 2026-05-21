@@ -7,10 +7,12 @@ const API = axios.create({
 })
 
 API.interceptors.request.use((req) => {
-    const token = localStorage.getItem("token");
+    const appData = JSON.parse(localStorage.getItem("Expense-Tracker-App"));
+    const token = appData?.token;
     if (token) {
         req.headers.Authorization = `Bearer ${token}`;
     }
     return req;
 })
 export default API;
+

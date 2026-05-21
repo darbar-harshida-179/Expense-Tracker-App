@@ -12,9 +12,6 @@ import { registerUser } from '../services/authServices';
 function SignUp() {
 
   const navigate = useNavigate();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
 
   const formik = useFormik({
@@ -36,7 +33,7 @@ function SignUp() {
         navigate('/login');
       } catch (err) {
         toast.error(err.response?.data?.message || "Registration Failed...");
-        toast.error("Error:-", err.message);
+        toast.error(err.message);
       }
     }
   })

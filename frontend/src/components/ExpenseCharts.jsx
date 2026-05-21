@@ -12,27 +12,47 @@ import {
     Pie,
     Cell,
     LineChart,
-    Line
+    Line,
+    CartesianGrid
 } from 'recharts'
 
-function ExpenseCharts({ type }) {
-
-    const data = [
-        { month: 'Jan', expense: 4000 },
-        { month: 'Feb', expense: 3000 },
-        { month: 'Mar', expense: 5000 },
-        { month: 'Apr', expense: 4500 },
-        { month: 'May', expense: 6000 }
-    ];
-
-    const pieData = [
-        { name: 'Food', value: 35 },
-        { name: 'Travel', value: 25 },
-        { name: 'Shopping', value: 20 },
-        { name: 'Bills', value: 20 }
-    ];
+function ExpenseCharts({ type, expenses }) {
 
     const COLORS = ['#154D71', '#3B82F6', '#06b6d4', '#93c5fd'];
+
+    const categoryMap = {};
+
+    expenses.forEach((expense) => {
+        const category = expense.category;
+
+        if (categoryMap[category]) {
+            categoryMap[category] += Number(expense.amount);
+        } else {
+            categoryMap[category] = Number(expense.amount);
+        }
+    });
+    const pieData = Object.keys(categoryMap).map((key) => ({
+        name: key,
+        value: categoryMap[key]
+    }));
+    const monthlyMap = {};
+
+    expenses.forEach((expense) => {
+        const date = new Date(expense.createdAt);
+        const month = date.toLocaleString('default', {
+            month: 'short'
+        });
+
+        if (monthlyMap[month]) {
+            monthlyMap[month] += Number(expense.amount);
+        } else {
+            monthlyMap[month] = Number(expense.amount);
+        }
+    });
+    const chartData = Object.keys(monthlyMap).map((key) => ({
+        month: key,
+        expense: monthlyMap[key]
+    }))
 
     return (
 
@@ -59,7 +79,12 @@ function ExpenseCharts({ type }) {
                     {
                         type === "bar" ? (
 
-                            <BarChart data={data}>
+                            <BarChart data={chartData} barCategoryGap={20}>
+                                <CartesianGrid
+                                    strokeDasharray="3 3"
+                                    vertical={false}
+                                />
+
                                 <XAxis dataKey="month" />
                                 <Tooltip />
                                 <Bar
@@ -102,7 +127,12 @@ function ExpenseCharts({ type }) {
                             </PieChart>
                         ) : (
 
-                            <LineChart data={data}>
+                            <LineChart data={chartData}>
+                                <CartesianGrid
+                                    strokeDasharray="3 3"
+                                    vertical={false}
+                                />
+
                                 <XAxis dataKey="month" />
                                 <Tooltip />
                                 <Line
