@@ -1,4 +1,4 @@
-// frontend/src/pages/Dashboard.jsx tu hi 
+// frontend/src/pages/Dashboard.jsx
 
 import React, { useEffect, useState } from 'react'
 

@@ -126,7 +126,6 @@ function ExpenseCharts({ type, expenses }) {
                                 </Pie>
                             </PieChart>
                         ) : (
-
                             <LineChart data={chartData}>
                                 <CartesianGrid
                                     strokeDasharray="3 3"

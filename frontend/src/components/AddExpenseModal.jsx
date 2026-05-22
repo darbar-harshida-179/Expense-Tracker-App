@@ -1,4 +1,4 @@
-// frontend/src/components/ExpenseModal.jsx
+// frontend/src/components/AddExpenseModal.jsx
 
 import React from 'react';
 import { useFormik } from 'formik';

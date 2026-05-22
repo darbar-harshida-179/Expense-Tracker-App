@@ -27,8 +27,6 @@ function Login() {
     onSubmit: async (values, { resetForm }) => {
       try {
         const response = await loginUser(values);
-        // localStorage.setItem('token', response.data.token);
-        // localStorage.setItem("user", JSON.stringify(response.data.user));
         const appData = {
           token: response.data.token,
           user: response.data.user
