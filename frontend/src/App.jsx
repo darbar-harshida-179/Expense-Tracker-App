@@ -1,4 +1,4 @@
- // frontend/src/app.jsx
+// frontend/src/app.jsx
 
 import './App.css'
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,6 +12,8 @@ import UsersExpensesCards from './components/UsersExpensesCards';
 import ExpenseCharts from './components/ExpenseCharts';
 import AddExpenseModal from './components/AddExpenseModal';
 import GoogleSuccess from './pages/GoogleSuccess';
+import ProtectedRoute from './routes/ProtectedRoute';
+import PublicRoute from './routes/PublicRoute';
 
 function App() {
 
@@ -20,13 +22,13 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Login />}></Route>
-          <Route path='/login' element={<Login />}>Login</Route>
-          <Route path='/signup' element={<SignUp />}>Sign Up</Route>
-          <Route path='/google-success' element={<GoogleSuccess/>}></Route>
-          <Route path='/dashboard' element={<Dashboard />}>Dashboard</Route>
+          <Route path='/login' element={<PublicRoute><Login /></PublicRoute>}>Login</Route>
+          <Route path='/signup' element={<PublicRoute><SignUp /></PublicRoute>}>Sign Up</Route>
+          <Route path='/google-success' element={<GoogleSuccess />}></Route>
+          <Route path='/dashboard' element={<ProtectedRoute> <Dashboard /> </ProtectedRoute>}>Dashboard</Route>
           <Route path='/navbar' element={<Navbar />}>Navbar</Route>
           <Route path='/addexpensemodal' element={< AddExpenseModal />}>Add Expense Modal</Route>
-          <Route path='/usersexpensescards' element={<UsersExpensesCards />}>User's Expenses Cards</Route>
+          <Route path='/usersexpensescards' element={<ProtectedRoute><UsersExpensesCards /></ProtectedRoute>}>User's Expenses Cards</Route>
           <Route path='/expensecharts' element={<ExpenseCharts />}>Expense's Charts</Route>
         </Routes>
         <ToastContainer position='top-center' autoClose={1000} />

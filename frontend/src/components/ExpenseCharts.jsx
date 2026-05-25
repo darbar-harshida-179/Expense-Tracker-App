@@ -61,7 +61,7 @@ function ExpenseCharts({ type, expenses }) {
                 <h1 className='text-xl font-bold text-[#154D71]'>
                     {
                         type === "bar"
-                            ? "Monthly Expenses"
+                            ? "Yearly Expenses"
                             : type === "pie"
                                 ? "Categories"
                                 : "Expense Trend"
@@ -118,7 +118,7 @@ function ExpenseCharts({ type, expenses }) {
                                         pieData.map((entry, index) => (
                                             <Cell
                                                 key={index}
-                                                fill={COLORS[index]}
+                                                fill={COLORS[index % COLORS.length]}
                                                 className='hover:opacity-80 duration-300 cursor-pointer outline-none'
                                             />
                                         ))

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { IoArrowBack } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Calender from './Calender';
+import { useAuth } from '../context/AuthContext';
 
 function Navbar({ setOpenModal, showBackButton = false, selectedDate = new Date(), setSelectedDate = () => { } }) {
 
@@ -17,11 +18,10 @@ function Navbar({ setOpenModal, showBackButton = false, selectedDate = new Date(
 
     const navigate = useNavigate();
 
-    const appData = JSON.parse(localStorage.getItem('Expense-Tracker-App'));
-    const user = appData?.user;
+    const { user, logout } = useAuth();
 
     const handleLogout = () => {
-        localStorage.removeItem("Expense-Tracker-App");
+        logout();
         navigate('/login');
     }
 

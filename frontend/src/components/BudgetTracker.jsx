@@ -1,16 +1,11 @@
 // frontend/src/components/BudgetTracker.jsx
 
 import React from 'react'
+import { formatCurrency } from '../utils/formatCurrency';
+import { budgetLimits } from './Categories';
 
 function BudgetTracker({ expenses }) {
 
-    const budgetLimits = {
-        food: 20000,
-        groceries: 15000,
-        shopping: 18000,
-        trip: 25000,
-        stationary: 10000
-    }
     const categoryTotals = {};
 
     expenses.forEach((expense) => {
@@ -61,7 +56,7 @@ function BudgetTracker({ expenses }) {
 
                                         <p className='font-semibold capitalize'>{category}</p>
 
-                                        <p>₹{spent} / ₹{limit}</p>
+                                        <p>{formatCurrency(spent)} / {formatCurrency(limit)}</p>
 
                                     </div>
 

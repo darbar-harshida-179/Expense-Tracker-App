@@ -10,32 +10,37 @@ import BudgetTracker from '../components/BudgetTracker'
 import AddExpenseModal from '../components/AddExpenseModal'
 import { addExpense, getExpenses } from '../services/expenseServices'
 import { toast } from 'react-toastify'
+import useSelectedMonth from '../hooks/useSelectedMonth'
+import { formatCurrency } from '../utils/formatCurrency'
+import Loading from '../components/Loading'
+import filterExpensesByMonth from '../utils/filterExpensesByMonth'
 
 function Dashboard() {
 
     const [openModal, setOpenModal] = useState(false);
     const [expenses, setExpenses] = useState([]);
-    const [selectedDate, setSelectedDate] = useState(() => {
-        const appData = JSON.parse(localStorage.getItem("Expense-Tracker-App"));
-        const savedDate = appData?.selectedMonth;
-        return savedDate ? new Date(savedDate) : new Date();
-    });
+    const [loading, setLoading] = useState(false);
+    const { selectedDate, setSelectedDate } = useSelectedMonth();
 
     useEffect(() => {
         fetchExpenses();
     }, [])
 
     const fetchExpenses = async () => {
+        setLoading(true);
         try {
             const response = await getExpenses();
             setExpenses(response.data);
             console.log("Dashboard Expenses:---", response.data);
         } catch (error) {
             toast.error(error);
+        } finally {
+            setLoading(false);
         }
     }
 
     const handleAddExpense = async (values) => {
+        setLoading(true);
         try {
             const response = await addExpense(values);
             await fetchExpenses();
@@ -45,17 +50,11 @@ function Dashboard() {
         } catch (error) {
             console.log("Add Expense Error:--", error);
             throw error;
+        } finally {
+            setLoading(false);
         }
     }
-
-    const filteredExpenses = expenses.filter((expense) => {
-        const expenseDate = new Date(expense.date);
-
-        return (
-            expenseDate.getMonth() === selectedDate.getMonth() &&
-            expenseDate.getFullYear() === selectedDate.getFullYear()
-        );
-    })
+    const filteredExpenses = filterExpensesByMonth(expenses, selectedDate);
 
     const totalExpense = filteredExpenses.reduce((acc, curr) => acc + Number(curr.amount), 0);
 
@@ -63,14 +62,19 @@ function Dashboard() {
 
     const totalCategories = new Set(filteredExpenses.map((expense) => expense.category)).size;
 
+    if (loading) {
+        return <Loading />
+    }
+
     return (
         <div className='min-h-screen bg-[#edf5ff] p-4 lg:p-7'>
             <Navbar setOpenModal={setOpenModal} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 
+
             <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mt-7'>
                 <SummaryCard
                     title="Total Expenses"
-                    amount={`₹${totalExpense}`}
+                    amount={formatCurrency(totalExpense)}
                     percent={`${totalTransactions} Transactions`}
                     dark={true}
                 />
@@ -85,14 +89,14 @@ function Dashboard() {
                     percent="Expense Categories"
                 />
                 <SummaryCard
-                    title="Latest Ebxpense"
-                    amount={filteredExpenses.length > 0 ? `₹${filteredExpenses[filteredExpenses.length - 1]?.amount}` : "$0"}
+                    title="Latest Expense"
+                    amount={filteredExpenses.length > 0 ? formatCurrency(filteredExpenses[filteredExpenses.length - 1]?.amount) : formatCurrency(0)}
                     percent="Most Recent"
                 />
             </div>
             <div className='grid grid-cols-1 xl:grid-cols-3 gap-6 mt-7'>
                 <ExpenseCharts type="bar" expenses={expenses} />
-                <ExpenseCharts type="pie" expenses={filteredExpenses} />
+                <ExpenseCharts type="pie" expenses={expenses} />
                 <ExpenseCharts type="line" expenses={expenses} />
             </div>
 

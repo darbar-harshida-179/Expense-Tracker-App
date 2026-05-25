@@ -3,6 +3,7 @@
 import React from 'react';
 import { FaWallet } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
+import { formatCurrency } from '../utils/formatCurrency';
 
 function RecentTransactions({ expenses }) {
 
@@ -58,7 +59,7 @@ function RecentTransactions({ expenses }) {
 
                             <div className='text-right'>
                                 <h1 className='font-bold text-lg text-red-500'>
-                                    ₹ {item.amount}
+                                    {formatCurrency(item.amount)}
                                 </h1>
                                 <p className='text-gray-500 text-sm'>
                                     {new Date(item.date).toLocaleDateString("en-IN")}

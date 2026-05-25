@@ -9,9 +9,11 @@ import { PiEyeSlashFill } from "react-icons/pi";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../services/authServices';
+import { useAuth } from '../context/AuthContext';
 
 function Login() {
 
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -27,14 +29,13 @@ function Login() {
     onSubmit: async (values, { resetForm }) => {
       try {
         const response = await loginUser(values);
-        const appData = {
+        login({
           token: response.data.token,
           user: response.data.user
-        };
-        localStorage.setItem("Expense-Tracker-App", JSON.stringify(appData));
+        })
         resetForm();
         toast.success("Login Successfull!");
-        navigate('/dashboard')
+        navigate('/dashboard');
       } catch (err) {
         toast.error(err.response?.data?.message || "login failed!");
       }
@@ -95,6 +96,7 @@ function Login() {
 
             <div className='flex justify-center gap-2 bg-white mt-5 h-10 rounded shadow-md p-2 items-center outline-none'>
               <FcGoogle size={25} />
+              
               <button
                 type='button'
                 onClick={() => {

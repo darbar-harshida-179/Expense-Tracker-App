@@ -5,18 +5,12 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { ImCancelCircle } from "react-icons/im";
-import { BiSolidDownArrow } from "react-icons/bi";
 import Select from 'react-select';
+import { categoryOptions } from './Categories';
 
 function AddExpenseModal({ setOpenModal, handleAddExpense }) {
 
-    const categoryOptions = [
-        { value: 'food', label: 'Food' },
-        { value: 'groceries', label: 'Groceries' },
-        { value: 'stationary', label: 'Stationary' },
-        { value: 'shopping', label: 'Shopping' },
-        { value: 'trip', label: 'Trip' }
-    ];
+   
     const formik = useFormik({
         initialValues: {
             title: "",
