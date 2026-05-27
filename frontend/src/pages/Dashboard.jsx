@@ -14,6 +14,7 @@ import useSelectedMonth from '../hooks/useSelectedMonth'
 import { formatCurrency } from '../utils/formatCurrency'
 import Loading from '../components/Loading'
 import filterExpensesByMonth from '../utils/filterExpensesByMonth'
+import checkBudgetLimit from '../utils/checkBudgetLimits'
 
 function Dashboard() {
 
@@ -40,7 +41,17 @@ function Dashboard() {
     }
 
     const handleAddExpense = async (values) => {
+
+        const isAllowed = checkBudgetLimit(expenses, values);
+
+        // if(!isAllowed) return;
+
+    if (!isAllowed) {
+        throw new Error("Budget limit exceeded");
+    }
+
         setLoading(true);
+
         try {
             const response = await addExpense(values);
             await fetchExpenses();

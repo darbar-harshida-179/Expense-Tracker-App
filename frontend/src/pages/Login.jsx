@@ -10,12 +10,14 @@ import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../services/authServices';
 import { useAuth } from '../context/AuthContext';
+import Loading from '../components/Loading';
 
 function Login() {
 
   const { login } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -28,6 +30,7 @@ function Login() {
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
+        setLoading(true);
         const response = await loginUser(values);
         login({
           token: response.data.token,
@@ -37,6 +40,7 @@ function Login() {
         toast.success("Login Successfull!");
         navigate('/dashboard');
       } catch (err) {
+        setLoading(false);
         toast.error(err.response?.data?.message || "login failed!");
       }
     }
@@ -90,13 +94,18 @@ function Login() {
 
             <button
               type='submit'
+              disabled={loading}
               onClick={(e) => e.stopPropagation()}
-              className='w-full h-10 mt-6 bg-[#154D71] text-white font-semibold rounded outline-none cursor-pointer hover:bg-[#123a56]'>Login
+              className='w-full h-10 mt-6 bg-[#154D71] text-white font-semibold rounded outline-none cursor-pointer hover:bg-[#123a56]'>
+              {loading
+                ? <Loading text='Logging In....' fullScreen={false} />
+                : 'Login'
+              }
             </button>
 
             <div className='flex justify-center gap-2 bg-white mt-5 h-10 rounded shadow-md p-2 items-center outline-none'>
               <FcGoogle size={25} />
-              
+
               <button
                 type='button'
                 onClick={() => {
@@ -104,7 +113,7 @@ function Login() {
                 }}
                 className='font-semibold text-gray-800 cursor-pointer outline-none'>Continue With Google</button>
             </div>
-            
+
             <p className='font-semibold text-gray-700 mt-3 text-center sm:text-base'>Don't have an account?
               <span
                 onClick={() => navigate('/signup')}

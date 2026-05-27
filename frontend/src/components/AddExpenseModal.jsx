@@ -1,16 +1,18 @@
 // frontend/src/components/AddExpenseModal.jsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { ImCancelCircle } from "react-icons/im";
 import Select from 'react-select';
 import { categoryOptions } from './Categories';
+import Loading from './Loading';
 
 function AddExpenseModal({ setOpenModal, handleAddExpense }) {
 
-   
+    const [loading, setLoading] = useState(false);
+
     const formik = useFormik({
         initialValues: {
             title: "",
@@ -26,13 +28,18 @@ function AddExpenseModal({ setOpenModal, handleAddExpense }) {
         }),
         onSubmit: async (values, { resetForm }) => {
             try {
+                setLoading(true);
                 await handleAddExpense(values);
-                console.log(values);
                 toast.success("Expense Added Successfully!");
                 resetForm();
                 setOpenModal(false);
             } catch (err) {
-                toast.error(err.message);
+                setLoading(false);
+                if (err.message === "Budget limit exceeded") {
+                    resetForm();
+                    setOpenModal(false);
+                    return;
+                }
             }
         }
     });
@@ -93,13 +100,13 @@ function AddExpenseModal({ setOpenModal, handleAddExpense }) {
 
                         <div className='mt-4'>
                             <label className='font-semibold text-[#154D71]'>Date</label>
-                            <input 
+                            <input
                                 type="date"
                                 name='date'
                                 value={formik.values.date}
                                 onChange={formik.handleChange}
                                 className='w-full px-3 py-2 border border-[#154D71] text-[#154D71] outline-none rounded mt-1'
-                             />
+                            />
                         </div>
 
                         <div className='mt-4'>
@@ -145,8 +152,14 @@ function AddExpenseModal({ setOpenModal, handleAddExpense }) {
                         </div>
                         <button
                             type='submit'
+                            disabled={loading}
                             className='w-full px-3 py-2 bg-[#154D71] text-white font-semibold rounded cursor-pointer outline-none mt-3 hover:bg-[#123a56]'>
-                            Add Expense</button>
+                            {
+                                loading
+                                    ? <Loading text='Adding' fullScreen={false} />
+                                    : 'Add Expense'
+                            }
+                        </button>
                     </div>
                 </form>
             </div>

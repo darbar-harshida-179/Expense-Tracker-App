@@ -5,11 +5,13 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { useAuth } from '../context/AuthContext';
+import Loading from '../components/Loading';
 
 function GoogleSuccess() {
 
     const { login } = useAuth();
     const navigate = useNavigate();
+
 
     useEffect(() => {
 
@@ -17,7 +19,7 @@ function GoogleSuccess() {
 
         const token = queryParams.get("token");
 
-        if(token){
+        if (token) {
             const decoded = jwtDecode(token);
             login({
                 token,
@@ -32,9 +34,7 @@ function GoogleSuccess() {
 
     }, [login, navigate]);
     return (
-        <div className='min-h-screen w-full flex justify-center items-center text-[#154D71] font-semibold text-2xl'>
-            Loading...
-        </div>
+        <Loading text='Signing In' />
     );
 }
 

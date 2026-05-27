@@ -53,7 +53,7 @@ function ExpenseCharts({ type, expenses }) {
         month: key,
         expense: monthlyMap[key]
     }))
-
+    
     return (
 
         <div className='bg-white rounded-3xl shadow-sm p-6 hover:shadow-xl transition duration-300'>

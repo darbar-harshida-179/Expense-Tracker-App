@@ -62,10 +62,30 @@ function BudgetTracker({ expenses }) {
 
                                     <div className='w-full bg-gray-200 h-3 rounded-full overflow-hidden'>
 
-                                        <div style={{ width: `${percentage}%` }} className='bg-[#154D71] h-full rounded-full' />
+                                        <div style={{ width: `${percentage}%` }} className={`h-full rounded-full duration-300
+                                            ${spent >= limit
+                                                ? 'bg-red-500'
+                                                : spent >= limit * 0.8
+                                                    ? 'bg-yellow-400'
+                                                    : 'bg-[#154D71]'
+                                            }
+                                            `} />
 
                                     </div>
-
+                                    {
+                                        spent >= limit && (
+                                            <p className='text-red-500 text-sm font-semibold mt-2'>
+                                                Budget Limit Exceeded For {category}
+                                            </p>
+                                        )
+                                    }
+                                    {
+                                        spent >= limit * 0.8 && spent < limit && (
+                                            <p className='text-yellow-600 text-sm font-medium mt-2'>
+                                                Almost Reached Your Budget Limit!
+                                            </p>
+                                        )
+                                    }
                                 </div>
                             );
                         })

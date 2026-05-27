@@ -1,17 +1,19 @@
 // frontend/src/components/EditExpenseModal.jsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
 import { ImCancelCircle } from "react-icons/im";
 import { toast } from 'react-toastify';
+import Loading from './Loading';
 
 function EditExpenseModal({
     selectedExpense,
     setOpenEditModal,
     handleUpdateExpense
 }) {
+    const [loading, setLoading] = useState(false);
 
     const categoryOptions = [
         { value: 'food', label: 'Food' },
@@ -38,10 +40,12 @@ function EditExpenseModal({
 
         onSubmit: async (values) => {
             try {
+                setLoading(true);
                 await handleUpdateExpense(selectedExpense._id, values);
                 toast.success("Expense Updated Successfully!");
                 setOpenEditModal(false);
             } catch (error) {
+                setLoading(false);
                 console.log("Update Error:-", error);
             }
         }
@@ -124,7 +128,11 @@ function EditExpenseModal({
                     type='submit'
                     className='w-full bg-[#154D71] text-white py-3 rounded-xl mt-5 font-semibold cursor-pointer outline-none'
                 >
-                    Update Expense
+                    {
+                        loading
+                            ? <Loading text='Updating...' fullScreen={false} />
+                            : 'Update Expense'
+                    }
                 </button>
             </form>
         </div>

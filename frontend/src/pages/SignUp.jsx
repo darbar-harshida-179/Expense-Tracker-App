@@ -8,11 +8,13 @@ import { useNavigate } from 'react-router-dom';
 import { IoEyeSharp } from "react-icons/io5";
 import { PiEyeSlashFill } from "react-icons/pi";
 import { registerUser } from '../services/authServices';
+import Loading from '../components/Loading';
 
 function SignUp() {
 
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -27,6 +29,7 @@ function SignUp() {
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
+        setLoading(true)
         const response = await registerUser(values);
         resetForm();
         toast.success("Registration Successfull, Please Login!");
@@ -100,7 +103,13 @@ function SignUp() {
 
             <button
               type='submit'
-              className='w-full h-10 mt-6 bg-[#154D71] text-white font-semibold rounded outline-none cursor-pointer  hover:bg-[#123a56]'>Sign Up
+              disabled={loading}
+              className='w-full h-10 mt-6 bg-[#154D71] text-white font-semibold rounded outline-none cursor-pointer  hover:bg-[#123a56]'>
+              {
+                loading
+                  ? <Loading text='Creating Account' fullScreen={false} />
+                  : 'Sign Up'
+              }
             </button>
 
             <p className='font-semibold text-gray-700 mt-3 text-center'>Already have an account?
@@ -109,7 +118,7 @@ function SignUp() {
                 className='text-[#154D71] cursor-pointer'>Login
               </span>
             </p>
-            
+
           </form>
         </div>
       </div>
