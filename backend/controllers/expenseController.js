@@ -28,6 +28,7 @@ export const addExpense = async (req, res) => {
 
     }
 };
+
 export const getExpenses = async (req, res) => {
 
     try {

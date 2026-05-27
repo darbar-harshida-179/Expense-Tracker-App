@@ -11,7 +11,7 @@ function Loading({ text = "Loading...", fullScreen = true }) {
             </div>
         )
     }
-
+    
     return (
         <span className='text-white font-medium'>
             {text}

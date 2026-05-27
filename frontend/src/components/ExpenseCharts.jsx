@@ -31,14 +31,18 @@ function ExpenseCharts({ type, expenses }) {
             categoryMap[category] = Number(expense.amount);
         }
     });
+
     const pieData = Object.keys(categoryMap).map((key) => ({
         name: key,
         value: categoryMap[key]
     }));
+
     const monthlyMap = {};
 
     expenses.forEach((expense) => {
+        
         const date = new Date(expense.date);
+
         const month = date.toLocaleString('default', {
             month: 'short'
         });
@@ -49,6 +53,7 @@ function ExpenseCharts({ type, expenses }) {
             monthlyMap[month] = Number(expense.amount);
         }
     });
+
     const chartData = Object.keys(monthlyMap).map((key) => ({
         month: key,
         expense: monthlyMap[key]

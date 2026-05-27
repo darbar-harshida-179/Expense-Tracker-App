@@ -33,14 +33,19 @@ function UsersExpensesCards() {
     useEffect(() => {
         fetchExpenses();
     }, []);
+
     const fetchExpenses = async () => {
+        
         setLoading(true);
+
         try {
             const response = await getExpenses();
             setExpenses(response.data);
-        } catch (error) {
+        } 
+        catch (error) {
             console.log("Fetch Expenses Error:-", error);
-        } finally {
+        } 
+        finally {
             setLoading(false);
         }
     }

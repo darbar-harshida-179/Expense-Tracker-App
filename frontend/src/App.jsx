@@ -20,30 +20,37 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Routes><Route path='/' element={
-          <PublicRoute>
-            <Login />
-          </PublicRoute>
-        }></Route>
+        <Routes>
+          <Route path='/' element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }>
+          </Route>
+
           <Route path='/login' element={
             <PublicRoute>
               <Login />
             </PublicRoute>}>
             Login
           </Route>
+
           <Route path='/signup' element={
             <PublicRoute>
               <SignUp />
             </PublicRoute>}>
             Sign Up
           </Route>
+
           <Route path='/google-success' element={<GoogleSuccess />}></Route>
+
           <Route path='/dashboard' element={
             <ProtectedRoute>
               <Dashboard />
             </ProtectedRoute>}>
             Dashboard
           </Route>
+
           <Route path='/navbar' element={<Navbar />}>Navbar</Route>
           <Route path='/addexpensemodal' element={< AddExpenseModal />}>Add Expense Modal</Route>
           <Route path='/usersexpensescards' element={<ProtectedRoute><UsersExpensesCards /></ProtectedRoute>}>User's Expenses Cards</Route>

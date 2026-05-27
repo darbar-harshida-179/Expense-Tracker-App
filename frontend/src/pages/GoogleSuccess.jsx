@@ -1,4 +1,3 @@
-
 // src/pages/GoogleSuccess.jsx
 
 import React, { useEffect } from 'react';

@@ -22,6 +22,7 @@ router.get('/google/callback',
         session: false,
         failureRedirect: '/login'
     }),
+    
     (req, res) => {
         const token = jwt.sign(
             {

@@ -59,6 +59,7 @@ function AddExpenseModal({ setOpenModal, handleAddExpense }) {
                         </div>
 
                         <h1 className='text-[#154D71] text-2xl text-center font-bold'>Add Expense</h1>
+
                         <div className='mt-4'>
                             <label className='font-semibold text-[#154D71]'>Title</label>
                             <input
