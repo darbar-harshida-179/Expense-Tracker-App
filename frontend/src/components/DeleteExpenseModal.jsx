@@ -26,7 +26,7 @@ function DeleteExpenseModal({
                         {" "} {selectedExpense?.title}
                     </span>
                 </p>
-                
+
                 <div className='flex gap-4 mt-8'>
                     <button
                         onClick={() => handleDeleteExpense(selectedExpense._id)}

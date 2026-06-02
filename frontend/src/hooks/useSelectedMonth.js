@@ -5,15 +5,19 @@ import React, { useState } from 'react'
 function useSelectedMonth() {
 
     const [selectedDate, setSelectedDate] = useState(() => {
-        const appData = JSON.parse(localStorage.getItem("Expense-Tracker-App"));
-        const savedDate = appData?.selectedMonth;
-        return savedDate ? new Date(savedDate) : new Date();
+        try {
+            const appData = JSON.parse(localStorage.getItem("Expense-Tracker-App"));
+            const savedDate = appData?.selectedMonth;
+            return savedDate ? new Date(savedDate) : new Date();
+        } catch (error) {
+            return new Date();
+        }
     });
 
-    return{
+    return {
         selectedDate,
         setSelectedDate
-    }
+    };
 }
 
 export default useSelectedMonth

@@ -1,4 +1,4 @@
-// frontend/src/components/AddExpenseModal.jsx
+  // frontend/src/components/AddExpenseModal.jsx 
 
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
@@ -33,6 +33,7 @@ function AddExpenseModal({ setOpenModal, handleAddExpense }) {
                 toast.success("Expense Added Successfully!");
                 resetForm();
                 setOpenModal(false);
+                
             } catch (err) {
                 setLoading(false);
                 if (err.message === "Budget limit exceeded") {

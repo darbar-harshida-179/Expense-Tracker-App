@@ -1,4 +1,4 @@
-// src/routes/PublicRoute.jsx
+// src/routes/__tests__PublicRoute.jsx
 
 import React from 'react'
 import { useAuth } from '../context/AuthContext'
